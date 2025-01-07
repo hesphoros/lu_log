@@ -3,12 +3,10 @@
 #define LU_LOG_USE_COLOR
 #define MAX_CALLBACKS 32
 
-static lu_log_mutex_t log_mutex;
-
 typedef struct lu_log_callback_s {
 	lu_log_handler_t handler;
 	void* data;
-	int level;
+	lu_log_level_t level;
 }lu_log_callback_t;
 
 static  struct {
@@ -44,10 +42,17 @@ static void lu_stdout_callback(lu_log_event_t* log_event) {
 	char buf[16];
 	buf[strftime(buf, sizeof(buf), "%H:%M:%S", log_event->time_info)] = '\0';
 #ifdef LU_LOG_USE_COLOR
-	fprintf(
-		log_event->data, "%s %s%-5s\x1b[0m \x1b[90m%s:%d:\x1b[0m ",
-		buf, lu_level_colors[log_event->level], lu_log_level_strings[log_event->level],
-		log_event->file, log_event->line);
+	if (isatty(fileno(log_event->data))) {
+		fprintf(
+			log_event->data, "%s %s%-5s\x1b[0m \x1b[90m%s:%d:\x1b[0m ",
+			buf, lu_level_colors[log_event->level], lu_log_level_strings[log_event->level],
+			log_event->file, log_event->line);
+	}
+	else {
+		fprintf(
+			log_event->data, "%s %-5s %s:%d: ",
+			buf, lu_log_level_strings[log_event->level], log_event->file, log_event->line);
+	}
 #else
 	fprintf(
 		log_event->data, "%s %-5s %s:%d: ",

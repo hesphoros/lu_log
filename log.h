@@ -6,28 +6,7 @@
 #include <stdbool.h>
 #include <time.h>
 
-#ifdef _WIN32  // Windows平台
-#include <windows.h>
-typedef CRITICAL_SECTION lu_log_mutex_t; // 使用Windows的CriticalSection
-#else  // Linux或其他平台
-#include <pthread.h>
-typedef pthread_mutex_t lu_log_mutex_t; // 使用POSIX线程的mutex
-#endif
-
 #define LU_LOG_VERSIO "0.1.0"
-
-typedef struct lu_log_event_s {
-	va_list ap;
-	const char* fmt;
-	const char* file;
-	struct tm* time_info;
-	void* data;
-	int line;
-	int level;
-}lu_log_event_t;
-
-typedef void (*lu_log_handler_t)(lu_log_event_t* event);
-typedef void (*lu_log_lock_fn)(int lock, void* data);
 
 typedef enum lu_log_level_e {
 	LU_LOG_TRACE,
@@ -37,6 +16,19 @@ typedef enum lu_log_level_e {
 	LU_LOG_ERROR,
 	LU_LOG_FATAL,
 }lu_log_level_t;
+
+typedef struct lu_log_event_s {
+	va_list ap;
+	const char* fmt;
+	const char* file;
+	struct tm* time_info;
+	void* data;
+	int line;
+	lu_log_level_t level;
+}lu_log_event_t;
+
+typedef void (*lu_log_handler_t)(lu_log_event_t* event);
+typedef void (*lu_log_lock_fn)(int lock, void* data);
 
 #define lu_log_trace(...) lu_log_log(LU_LOG_TRACE, __FILE__, __LINE__, __VA_ARGS__)
 #define lu_log_debug(...) lu_log_log(LU_LOG_DEBUG, __FILE__, __LINE__, __VA_ARGS__)
