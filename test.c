@@ -14,7 +14,7 @@ int main() {
 
 	// 设置日志级别为 LOG_DEBUG
 	lu_log_set_level(LU_LOG_DEBUG);
-	lu_log_set_quiet(1);
+	//lu_log_set_quiet(1);
 	// 启用日志输出
 	lu_log_trace("This is a trace message");
 	lu_log_debug("This is a debug message");
