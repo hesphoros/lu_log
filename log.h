@@ -6,6 +6,14 @@
 #include <stdbool.h>
 #include <time.h>
 
+#ifdef _WIN32  // Windows平台
+#include <windows.h>
+typedef CRITICAL_SECTION lu_log_mutex_t; // 使用Windows的CriticalSection
+#else  // Linux或其他平台
+#include <pthread.h>
+typedef pthread_mutex_t lu_log_mutex_t; // 使用POSIX线程的mutex
+#endif
+
 #define LU_LOG_VERSIO "0.1.0"
 
 typedef struct lu_log_event_s {

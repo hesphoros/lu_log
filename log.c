@@ -1,6 +1,9 @@
 #include "log.h"
 
+#define LU_LOG_USE_COLOR
 #define MAX_CALLBACKS 32
+
+static lu_log_mutex_t log_mutex;
 
 typedef struct lu_log_callback_s {
 	lu_log_handler_t handler;
@@ -25,18 +28,18 @@ static const char* lu_log_level_strings[] = {
 	"FATAL",
 };
 
-#define LU_LOG_USE_COLOR
 #ifdef LU_LOG_USE_COLOR
 static const char* lu_level_colors[] = {
-	"\x1b[94m",
-	"\x1b[36m",
-	"\x1b[32m",
-	"\x1b[33m",
-	"\x1b[31m",
-	"\x1b[35m",
+	"\x1b[94m",  // TRACE
+	"\x1b[36m",  // DEBUG
+	"\x1b[32m",  // INFO
+	"\x1b[33m",  // WARN
+	"\x1b[31m",  // ERROR
+	"\x1b[35m",  // FATAL
 };
 #endif
 
+// 输出到标准输出的回调
 static void lu_stdout_callback(lu_log_event_t* log_event) {
 	char buf[16];
 	buf[strftime(buf, sizeof(buf), "%H:%M:%S", log_event->time_info)] = '\0';

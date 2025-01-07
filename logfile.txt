@@ -1,4 +1,4 @@
-2025-01-07 15:55:50 INFO  F:\codespace\lu_log\test.c:21: This is an info message
-2025-01-07 15:55:50 WARN  F:\codespace\lu_log\test.c:22: This is a warning message
-2025-01-07 15:55:50 ERROR F:\codespace\lu_log\test.c:23: This is an error message
-2025-01-07 15:55:50 FATAL F:\codespace\lu_log\test.c:24: This is a fatal message
+2025-01-07 18:22:21 INFO  F:\codespace\lu_log\test.c:21: This is an info message
+2025-01-07 18:22:21 WARN  F:\codespace\lu_log\test.c:22: This is a warning message
+2025-01-07 18:22:21 ERROR F:\codespace\lu_log\test.c:23: This is an error message
+2025-01-07 18:22:21 FATAL F:\codespace\lu_log\test.c:24: This is a fatal message

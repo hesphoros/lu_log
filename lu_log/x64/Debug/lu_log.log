@@ -1,1 +1,7 @@
-﻿
+﻿  log.c
+F:\codespace\lu_log\log.c(121,26): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  test.c
+  正在生成代码...
+  lu_log.vcxproj -> F:\codespace\lu_log\x64\Debug\lu_log.exe
+  'pwsh.exe' 不是内部或外部命令，也不是可运行的程序
+  或批处理文件。
