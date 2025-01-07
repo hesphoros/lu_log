@@ -12,11 +12,10 @@ typedef struct lu_log_event_s {
 	va_list ap;
 	const char* fmt;
 	const char* file;
-	struct tm* time;
+	struct tm* time_info;
 	void* data;
 	int line;
 	int level;
-	int size;
 }lu_log_event_t;
 
 typedef void (*lu_log_handler_t)(lu_log_event_t* event);

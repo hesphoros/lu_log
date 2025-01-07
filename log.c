@@ -39,7 +39,7 @@ static const char* lu_level_colors[] = {
 
 static void lu_stdout_callback(lu_log_event_t* log_event) {
 	char buf[16];
-	buf[strftime(buf, sizeof(buf), "%H:%M:%S", log_event->time)] = '\0';
+	buf[strftime(buf, sizeof(buf), "%H:%M:%S", log_event->time_info)] = '\0';
 #ifdef LU_LOG_USE_COLOR
 	fprintf(
 		log_event->data, "%s %s%-5s\x1b[0m \x1b[90m%s:%d:\x1b[0m ",
@@ -57,7 +57,7 @@ static void lu_stdout_callback(lu_log_event_t* log_event) {
 
 static void lu_file_callback(lu_log_event_t* log_event) {
 	char buf[64];
-	buf[strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", log_event->time)] = '\0';
+	buf[strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", log_event->time_info)] = '\0';
 	fprintf(
 		log_event->data, "%s %-5s %s:%d: ",
 		buf, lu_log_level_strings[log_event->level], log_event->file, log_event->line);
@@ -113,9 +113,9 @@ int lu_log_add_fp(FILE* fp, lu_log_level_t level)
 }
 
 static void lu_init_event(lu_log_event_t* log_event, void* data) {
-	if (!log_event->time) {
+	if (!log_event->time_info) {
 		time_t t = time(NULL);
-		log_event->time = localtime(&t);
+		log_event->time_info = localtime(&t);
 	}
 	log_event->data = data;
 }
