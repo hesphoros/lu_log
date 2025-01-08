@@ -130,6 +130,7 @@ static void lu_init_event(lu_log_event_t* log_event, void* data) {
 
 void lu_log_log(lu_log_level_t level, const char* file, int line, const char* fmt, ...)
 {
+	//
 	lu_log_event_t log_event = {
 		.fmt = fmt,
 		.file = file,
