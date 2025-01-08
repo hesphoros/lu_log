@@ -38,7 +38,7 @@ static const char* lu_level_colors[] = {
 #endif
 
 // 输出到标准输出的回调
-static void lu_stdout_callback(lu_log_event_t* log_event) {
+static void lu_stdout_handler(lu_log_event_t* log_event) {
 	char buf[16];
 	buf[strftime(buf, sizeof(buf), "%H:%M:%S", log_event->time_info)] = '\0';
 #ifdef LU_LOG_USE_COLOR
@@ -63,7 +63,7 @@ static void lu_stdout_callback(lu_log_event_t* log_event) {
 	fflush(log_event->data);
 }
 
-static void lu_file_callback(lu_log_event_t* log_event) {
+static void lu_file_handler(lu_log_event_t* log_event) {
 	char buf[64];
 	buf[strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", log_event->time_info)] = '\0';
 	fprintf(
@@ -117,7 +117,7 @@ int lu_log_add_handler(lu_log_handler_t handler, void* data, lu_log_level_t leve
 
 int lu_log_add_fp(FILE* fp, lu_log_level_t level)
 {
-	return lu_log_add_handler(lu_file_callback, fp, level);
+	return lu_log_add_handler(lu_file_handler, fp, level);
 }
 
 static void lu_init_event(lu_log_event_t* log_event, void* data) {
@@ -141,7 +141,7 @@ void lu_log_log(lu_log_level_t level, const char* file, int line, const char* fm
 	if (!lu_log_config_t.quiet && level >= lu_log_config_t.level) {
 		lu_init_event(&log_event, stderr);
 		va_start(log_event.ap, fmt);
-		lu_stdout_callback(&log_event);
+		lu_stdout_handler(&log_event);
 		va_end(log_event.ap);
 	}
 
