@@ -39,7 +39,7 @@ static const char* lu_level_colors[] = {
 
 // 输出到标准输出的回调
 static void lu_stdout_handler(lu_log_event_t* log_event) {
-	char buf[16];
+	char buf[32];
 	buf[strftime(buf, sizeof(buf), "%H:%M:%S", log_event->time_info)] = '\0';
 #ifdef LU_LOG_USE_COLOR
 	if (isatty(fileno(log_event->data))) {
@@ -121,9 +121,12 @@ int lu_log_add_fp(FILE* fp, lu_log_level_t level)
 }
 
 static void lu_init_event(lu_log_event_t* log_event, void* data) {
+	static struct tm time_info;
 	if (!log_event->time_info) {
 		time_t t = time(NULL);
-		log_event->time_info = localtime(&t);
+
+		localtime_s(&time_info, &t);
+		log_event->time_info = &time_info;
 	}
 	log_event->data = data;
 }

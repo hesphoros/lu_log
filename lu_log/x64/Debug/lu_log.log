@@ -1,7 +1,4 @@
 ﻿  log.c
-F:\codespace\lu_log\log.c(45,6): warning C4013: “isatty”未定义；假设外部返回 int
-F:\codespace\lu_log\log.c(45,13): warning C4996: 'fileno': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _fileno. See online help for details.
-F:\codespace\lu_log\log.c(126,26): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   lu_log.vcxproj -> F:\codespace\lu_log\x64\Debug\lu_log.exe
   'pwsh.exe' 不是内部或外部命令，也不是可运行的程序
   或批处理文件。

@@ -6,7 +6,15 @@
 #include <stdbool.h>
 #include <time.h>
 
-#define LU_LOG_VERSIO "0.1.0"
+#ifdef _WIN32
+#include <io.h>
+#define fileno _fileno
+#define isatty _isatty
+#else
+#include <unistd.h>
+#endif
+
+#define LU_LOG_VERSIO "1.1.0"
 
 typedef enum lu_log_level_e {
 	LU_LOG_TRACE,
@@ -30,12 +38,12 @@ typedef struct lu_log_event_s {
 typedef void (*lu_log_handler_t)(lu_log_event_t* event);
 typedef void (*lu_log_lock_fn)(int lock, void* data);
 
-#define lu_log_trace(...) lu_log_log(LU_LOG_TRACE, __FILE__, __LINE__, __VA_ARGS__)
-#define lu_log_debug(...) lu_log_log(LU_LOG_DEBUG, __FILE__, __LINE__, __VA_ARGS__)
-#define lu_log_info(...) lu_log_log(LU_LOG_INFO, __FILE__, __LINE__, __VA_ARGS__)
-#define lu_log_warn(...) lu_log_log(LU_LOG_WARN, __FILE__, __LINE__, __VA_ARGS__)
-#define lu_log_error(...) lu_log_log(LU_LOG_ERROR, __FILE__, __LINE__, __VA_ARGS__)
-#define lu_log_fatal(...) lu_log_log(LU_LOG_FATAL, __FILE__, __LINE__, __VA_ARGS__)
+#define lu_log_trace(...) lu_log_log(LU_LOG_TRACE, __FILE__, __LINE__, ##__VA_ARGS__)
+#define lu_log_debug(...) lu_log_log(LU_LOG_DEBUG, __FILE__, __LINE__, ##__VA_ARGS__)
+#define lu_log_info(...) lu_log_log(LU_LOG_INFO, __FILE__, __LINE__, ##__VA_ARGS__)
+#define lu_log_warn(...) lu_log_log(LU_LOG_WARN, __FILE__, __LINE__, ##__VA_ARGS__)
+#define lu_log_error(...) lu_log_log(LU_LOG_ERROR, __FILE__, __LINE__, ##__VA_ARGS__)
+#define lu_log_fatal(...) lu_log_log(LU_LOG_FATAL, __FILE__, __LINE__, ##__VA_ARGS__)
 
 const char* lu_log_level_to_string(lu_log_level_t level);
 void lu_log_set_lock(lu_log_lock_fn lock, void* data);
