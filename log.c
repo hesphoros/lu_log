@@ -1,5 +1,4 @@
 #include "log.h"
-
 #define LU_LOG_USE_COLOR
 #define MAX_CALLBACKS 32
 
@@ -119,6 +118,7 @@ int lu_log_add_fp(FILE* fp, lu_log_level_t level)
 {
 	return lu_log_add_handler(lu_file_handler, fp, level);
 }
+
 
 static void lu_init_event(lu_log_event_t* log_event, void* data) {
 	static struct tm time_info;
